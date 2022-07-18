@@ -3,8 +3,6 @@ package cnp.springcloud.controller;
 import cnp.springcloud.entities.CommonResult;
 import cnp.springcloud.entities.Payment;
 import cnp.springcloud.service.PaymentService;
-
-
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.client.ServiceInstance;
@@ -31,7 +29,7 @@ public class PaymentController {
         int result = paymentService.create(payment);
         log.info("***********插入结果：" + result);
         if (result > 0) {
-            return new CommonResult(200, "插入数据库成功, servicePort: " + serverPort, result);
+            return new CommonResult(200, "插入数据库成功, servicePort: "+ serverPort, result);
         } else {
             return new CommonResult(444, "插入数据库失败");
         }
@@ -42,7 +40,7 @@ public class PaymentController {
         Payment payment = paymentService.getPaymentById(id);
         log.info("************查询结果"+payment);
         if (payment != null) {
-            return new CommonResult(200, "查询成功, servicePort:" + serverPort, payment);
+            return new CommonResult(200, "查询成功, servicePort: "+serverPort, payment);
         } else {
             return new CommonResult(444, "没有对应的记录，查询ID: "+id);
         }
@@ -52,7 +50,7 @@ public class PaymentController {
     public Object discovery() {
         List<String> services = discoveryClient.getServices();
         for(String element : services) {
-            log.info("***********element: " + element);
+            log.info("**************element: " + element);
         }
 
         List<ServiceInstance> instances = discoveryClient.getInstances("CLOUD-PAYMENT-SERVICE");
@@ -62,5 +60,4 @@ public class PaymentController {
 
         return this.discoveryClient;
     }
-
 }
